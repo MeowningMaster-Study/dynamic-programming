@@ -1,9 +1,11 @@
-<script>
+<script lang="ts">
   import NumberInput from '@components/number_input.svelte';
   import FunctionalInput from '@components/functional_input.svelte';
   import ControlSystem from '@components/control_system.svelte';
+  import { Functional } from '@lib/main';
   let steps_count = 3;
-  let functional;
+  let params_count = 2;
+  let functional: Functional;
 </script>
 
 <h1>Метод динамічного програмування</h1>
@@ -16,12 +18,12 @@
 <p>
   Функціонал:
   <br />
-  <FunctionalInput {steps_count} bind:value={functional} />
+  <FunctionalInput {steps_count} {params_count} bind:value={functional} />
 </p>
 <p>
   Система керування:
   <br />
-  <ControlSystem />
+  <ControlSystem {params_count} />
 </p>
 
 <style>

@@ -1,7 +1,7 @@
 export type Functional = {
   xInner: number[]; // _x1 & _x2
   uInner: number; // _u
-  xOutter: number[]; // _x1(n + 1) & _x2(n + 1)
+  xOuter: number[]; // _x1(n + 1) & _x2(n + 1)
 };
 
 export type System = number[][]; // [[_x1, _x2, _u], [_x1, _x2, _u]]
@@ -20,7 +20,7 @@ export const calc = (
   xInnitial: Innitial, // початкові умови на х(i)
   uConstraints: Constraints // обмеження на u(i)
 ): Result => {
-  let xResultArray = [];
+  const xResultArray = [];
   {
     const row1 = [];
     for (let i = 0; i < n + 1; ++i) {
@@ -34,7 +34,7 @@ export const calc = (
     }
     xResultArray.push(row2);
   }
-  let uResArray = [];
+  const uResArray = [];
   {
     for (let i = 0; i < n; ++i) {
       uResArray.push(0);

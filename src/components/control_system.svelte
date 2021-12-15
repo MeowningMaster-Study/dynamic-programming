@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   import Katex from './katex.svelte';
   import NumberInput from './number_input.svelte';
 
-  export let params_count = 2;
+  export let params_count: number;
   const genValuesForParams = () => new Array(params_count).fill(0);
   const genValue = () =>
     new Array(params_count)
