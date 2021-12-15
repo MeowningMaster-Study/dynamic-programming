@@ -1,31 +1,44 @@
 <script>
-  export let value = 4;
-  export let min = 1;
-  export let max = 10;
+  export let value;
+  export let min;
+  export let max;
   let n = value;
 
   const on_change = () => {
-    if (typeof n != 'number') {
+    if (typeof n !== 'number') {
       n = 1;
     }
-    min = Number(min);
-    if (n < min) {
-      n = min;
+    if (typeof min === 'number') {
+      if (n < min) {
+        n = min;
+      }
     }
-    max = Number(max);
-    if (n > max) {
-      n = max;
+    if (typeof max === 'number') {
+      if (n > max) {
+        n = max;
+      }
+      value = n;
     }
-    value = n;
   };
 </script>
 
 <input type="number" on:change={on_change} bind:value={n} />
 
 <style>
-  input[type='number'] {
+  input {
     width: 20px;
+    height: 20px;
     text-align: center;
+    border: none;
+    border-bottom: 2px solid #81a19b;
+    border-radius: 5px;
+    margin: 2px 0;
+    padding: 0;
+  }
+
+  input:focus-visible {
+    outline: none;
+    background: #faedc6;
   }
 
   /* remove spit buttons */
