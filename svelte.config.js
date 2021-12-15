@@ -8,7 +8,8 @@ export default {
     vite: {
       resolve: {
         alias: {
-          '@components': resolve('./src/components')
+          '@components': resolve('./src/components'),
+          '@lib': resolve('./src/lib')
         }
       }
     }
