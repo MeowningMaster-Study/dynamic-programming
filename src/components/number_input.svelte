@@ -1,24 +1,28 @@
-<script>
-  export let value;
-  export let min;
-  export let max;
+<script lang="ts">
+  export let value: number;
+  export let min: number | undefined = undefined;
+  export let max: number | undefined = undefined;
+  export let int = true;
   let n = value;
 
   const on_change = () => {
     if (typeof n !== 'number') {
       n = 1;
     }
-    if (typeof min === 'number') {
+    if (min !== undefined) {
       if (n < min) {
         n = min;
       }
     }
-    if (typeof max === 'number') {
+    if (max !== undefined) {
       if (n > max) {
         n = max;
       }
-      value = n;
     }
+    if (int) {
+      n = Math.trunc(n);
+    }
+    value = n;
   };
 </script>
 
