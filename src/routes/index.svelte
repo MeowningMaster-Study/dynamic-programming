@@ -2,7 +2,7 @@
   import NumberInput from '@components/number_input.svelte';
   import FunctionalInput from '@components/functional_input.svelte';
   import ControlSystem from '@components/control_system.svelte';
-  import { Functional } from '@lib/main';
+  import { Functional } from '@lib/calc';
   let steps_count = 3;
   let params_count = 2;
   let functional: Functional;

@@ -5,7 +5,7 @@ import {
   Innitial,
   Constraints,
   Result
-} from './main';
+} from './calc';
 
 test('mdk', () => {
   const n = 2;

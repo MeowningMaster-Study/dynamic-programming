@@ -1,7 +1,7 @@
 <script lang="ts">
   import Katex from './katex.svelte';
   import NumberInput from './number_input.svelte';
-  import { Functional } from '@lib/main';
+  import { Functional } from '@lib/calc';
 
   export let steps_count: number;
   export let params_count: number;
