@@ -4,7 +4,7 @@ export type Functional = {
   xOuter: number[]; // _x1(n + 1) & _x2(n + 1)
 };
 
-export type System = number[][]; // [[_x1, _x2, _u], [_x1, _x2, _u]]
+export type System = { x: number[]; u: number }[]; // [[_x1, _x2, _u], [_x1, _x2, _u]]
 export type Innitial = number[][]; // [[...], [...]]
 export type Constraints = number[][]; // [[...], ... , [...]]  n + 1 inner arrays
 
