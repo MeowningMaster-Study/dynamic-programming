@@ -15,13 +15,13 @@
       {/each}
       <th><Katex math="u" /></th>
     </tr>
-    {#each { length: steps_count + 1 } as _, i}
+    {#each { length: steps_count + 2 } as _, i}
       <tr>
         <td>{i}</td>
         {#each { length: params_count } as _, j}
-          <td>{result.x[j][i]}</td>
+          <td>{Number(result.x[j][i])}</td>
         {/each}
-        <td>{i != steps_count ? result.u[i] : ''}</td>
+        <td>{i != steps_count + 1 ? result.u[i] : ''}</td>
       </tr>
     {/each}
   {/if}

@@ -13,7 +13,7 @@
     Result
   } from '@lib/calc';
   import ControlConstraints from '@components/control_constraints.svelte';
-  let steps_count = 3;
+  let steps_count = 2;
   let params_count = 2;
   let functional: Functional;
   let system: System;
