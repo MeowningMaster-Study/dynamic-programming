@@ -13,7 +13,7 @@
     Result
   } from '@lib/calc';
   import ControlConstraints from '@components/control_constraints.svelte';
-  let steps_count = 3;
+  let steps_count = 2;
   let params_count = 2;
   let functional: Functional;
   let system: System;
@@ -62,8 +62,8 @@
   <ControlConstraints {steps_count} bind:constraints />
 </p>
 <h2>Результат:</h2>
+<ResultOutput bind:result {steps_count} {params_count} />
 
-<!-- <ResultOutput bind:result {steps_count} {params_count} /> -->
 <style>
   :global(body) {
     font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console,

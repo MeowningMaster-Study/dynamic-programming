@@ -7,22 +7,24 @@
 </script>
 
 <table>
-  <tr>
-    <th><Katex math="N" /></th>
-    {#each { length: params_count } as _, i}
-      <th><Katex math={`x_{${i}}`} /></th>
-    {/each}
-    <th><Katex math="u" /></th>
-  </tr>
-  {#each { length: steps_count + 1 } as _, i}
+  {#if result !== undefined}
     <tr>
-      <td>{i}</td>
-      {#each { length: params_count } as _, j}
-        <td>{result.x[j][i]}</td>
+      <th><Katex math="N" /></th>
+      {#each { length: params_count } as _, i}
+        <th><Katex math={`x_{${i}}`} /></th>
       {/each}
-      <td>{i != steps_count ? result.u[i] : ''}</td>
+      <th><Katex math="u" /></th>
     </tr>
-  {/each}
+    {#each { length: steps_count + 2 } as _, i}
+      <tr>
+        <td>{i}</td>
+        {#each { length: params_count } as _, j}
+          <td>{Number(result.x[j][i])}</td>
+        {/each}
+        <td>{i != steps_count + 1 ? result.u[i] : ''}</td>
+      </tr>
+    {/each}
+  {/if}
 </table>
 
 <style>
