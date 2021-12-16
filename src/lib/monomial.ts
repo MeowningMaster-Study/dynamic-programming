@@ -64,4 +64,6 @@ export class Monomial {
 
     return new Monomial(this.coeff * rhs.coeff, this.degree + rhs.degree)
   }
+
+  isNumber(): boolean { return this.degree === 0 }
 }
