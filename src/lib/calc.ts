@@ -24,20 +24,18 @@ export const calc = (
   xInnitial: Innitial, // початкові умови на х(i)
   uConstraints: Constraints // обмеження на u(i)
 ): Result => {
-  const xResArray = [];
-  {
-    const row1 = [];
-    for (let i = 0; i < n + 1; ++i) {
-      row1.push(0);
-    }
-    xResArray.push(row1);
 
-    const row2 = [];
-    for (let i = 0; i < n + 1; ++i) {
-      row2.push(0);
+  const countX = xInnitial.length
+
+  const xResArray: number[][] = [];
+
+  for (let i = 0; i < countX; i ++) {
+    const row = [];
+    for (let j = 0; j < n + 1; ++j) {
+      row.push(0);
     }
-    xResArray.push(row2);
   }
+  
   const uResArray: number[] = [];
 
   // ******************** 👇 change here
@@ -53,9 +51,11 @@ export const calc = (
         chosenU: undefined
   }
 
+  let bellmanExpr: BellmanExpression = undefined
+
   for (let i = n; i >= 0; i --) {
 
-    const bellmanExpr = bellmanStep(
+    bellmanExpr = bellmanStep(
                                     system,
                                     funct,
                                     expr,
@@ -65,7 +65,24 @@ export const calc = (
     uResArray.unshift(bellmanExpr.chosenU)
   }
 
+  // test logging
   console.log(uResArray);
+
+  /*
+  const xResArray: number[][] = [];
+  
+  for (let i = 0; i < n; i ++) {
+    const row = [];
+    for (let j = 0; j < n + 1; ++j) {
+      row.push(0);
+    }
+  }
+  */
+
+  for (let i = 0; i < xInnitial.length; i ++) {
+
+    xResArray[i][0] = bellmanExpr.xCoeff[i]
+  }
   
   
 
