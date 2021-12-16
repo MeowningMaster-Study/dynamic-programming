@@ -36,22 +36,23 @@ export class Expression {
     return res
   }
 
-  // TODO
   /**
    * Removes and returns coefficient before term with sort termSort
    * @param termSort name of term sort kind to looking for
    * @returns undefined if term was not found
    */
-  pop(termSort: string): number {
-
-    return 0
-  }
-
-  // TODO
-  sort() {
-
-    console.log('sorting');
+  find(termSort: string): number {
     
+    const res = this.expr.find((element, _index, _array) => {
+
+      if (element.getSort() === termSort) {
+        return true
+      }
+
+      return false
+    })
+
+    return res == undefined ? undefined : res.getCoeff()
   }
   
   /**
