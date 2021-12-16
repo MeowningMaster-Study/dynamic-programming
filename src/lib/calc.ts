@@ -9,7 +9,7 @@ export type Functional = {
   xOuter: number[]; // _x1(n + 1) & _x2(n + 1)
 };
 
-export type System = { x: number[], u: number }[]; // [[_x1, _x2, _u], [_x1, _x2, _u]]
+export type System = { x: number[]; u: number }[]; // [[_x1, _x2, _u], [_x1, _x2, _u]]
 export type Innitial = number[][]; // [[...], [...]]
 export type Constraints = number[][]; // [[...], ... , [...]]  n + 1 inner arrays
 
@@ -43,28 +43,22 @@ export const calc = (
   // ******************** 👇 change here
 
   const funct: InFunctional = {
-        xCoeff: functional.xInner,
-        u: 0
-  }
+    xCoeff: functional.xInner,
+    u: 0
+  };
 
   const expr: BellmanExpression = {
-        xCoeff: functional.xOuter,
-        freeMem: 0,
-        chosenU: undefined
-  }
+    xCoeff: functional.xOuter,
+    freeMem: 0,
+    chosenU: undefined
+  };
 
-  let bellmanExpr: BellmanExpression = undefined
+  let bellmanExpr: BellmanExpression = undefined;
 
-  for (let i = n; i >= 0; i --) {
+  for (let i = n; i >= 0; i--) {
+    bellmanExpr = bellmanStep(system, funct, expr, uConstraints[i]);
 
-    bellmanExpr = bellmanStep(
-                                    system,
-                                    funct,
-                                    expr,
-                                    uConstraints[i]
-    )
-
-    uResArray.unshift(bellmanExpr.chosenU)
+    uResArray.unshift(bellmanExpr.chosenU);
   }
 
   let xVals: Array<number> = new Array(countXk).fill(0)
