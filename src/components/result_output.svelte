@@ -20,7 +20,7 @@
       {#each { length: params_count } as _, j}
         <td>{result.x[j][i]}</td>
       {/each}
-      <td>{i != params_count + 1 ? result.u[i] : ''}</td>
+      <td>{i != steps_count ? result.u[i] : ''}</td>
     </tr>
   {/each}
 </table>
