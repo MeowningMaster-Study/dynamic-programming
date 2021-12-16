@@ -1,19 +1,19 @@
 <script lang="ts">
+  import { System } from '@lib/calc';
+
   import Katex from './katex.svelte';
   import NumberInput from './number_input.svelte';
 
   export let params_count: number;
-  const genValuesForParams = () => new Array(params_count).fill(0);
-  const genValue = () =>
-    new Array(params_count)
-      .fill(0)
-      .map(() => ({ xi: genValuesForParams(), u: 0 }));
-  let value = genValue();
+  export let system: System;
+  $: system = new Array(params_count)
+    .fill(0)
+    .map(() => ({ x: new Array(params_count).fill(0), u: 0 }));
 </script>
 
-{#each value as row, i}
+{#each system as row, i}
   <Katex math={`x_{${i + 1}}(i+1)=`} />
-  {#each row.xi as arg, i}
+  {#each row.x as arg, i}
     <NumberInput min={0} bind:value={arg} />
     <Katex math={`x_{${i + 1}}(i)`} />
     {' + '}

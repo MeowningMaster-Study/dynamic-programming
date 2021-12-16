@@ -2,10 +2,31 @@
   import NumberInput from '@components/number_input.svelte';
   import FunctionalInput from '@components/functional_input.svelte';
   import ControlSystem from '@components/control_system.svelte';
-  import { Functional } from '@lib/calc';
+  import InitialConditions from '@components/initial_conditions.svelte';
+  import ResultOutput from '@components/result_output.svelte';
+  import {
+    calc,
+    Functional,
+    Innitial,
+    System,
+    Constraints,
+    Result
+  } from '@lib/calc';
+  import ControlConstraints from '@components/control_constraints.svelte';
   let steps_count = 3;
   let params_count = 2;
   let functional: Functional;
+  let system: System;
+  let initial: Innitial;
+  let constraints: Constraints;
+  let result: Result;
+  $: {
+    try {
+      result = calc(steps_count, functional, system, initial, constraints);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 </script>
 
 <h1>Метод динамічного програмування</h1>
@@ -16,15 +37,31 @@
   <NumberInput bind:value={steps_count} min={1} max={10} />
 </p>
 <p>
+  Кількість фазових координат:
+  <NumberInput bind:value={params_count} min={1} max={5} disabled />
+</p>
+<p>
   Функціонал:
   <br />
-  <FunctionalInput {steps_count} {params_count} bind:value={functional} />
+  <FunctionalInput {steps_count} {params_count} bind:functional />
 </p>
 <p>
   Система керування:
   <br />
-  <ControlSystem {params_count} />
+  <ControlSystem {params_count} bind:system />
 </p>
+<p>
+  Початкові умови:
+  <br />
+  <InitialConditions {params_count} bind:initial />
+</p>
+<p>
+  Обмеження на керування:
+  <br />
+  <ControlConstraints {steps_count} bind:constraints />
+</p>
+<h2>Результат:</h2>
+<ResultOutput bind:result {steps_count} {params_count} />
 
 <style>
   :global(body) {
