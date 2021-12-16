@@ -22,12 +22,45 @@ export class Expression {
   }
 
   /**
+   * Create new object
+   */
+  add(other: Expression): Expression {
+
+    const res = new Expression(this.expr)
+
+    for (let i = 0; i < other.expr.length; i++) {
+
+        res._add(other.expr[i].copy())
+    }
+
+    return res
+  }
+
+  // TODO
+  /**
+   * Removes and returns coefficient before term with sort termSort
+   * @param termSort name of term sort kind to looking for
+   * @returns undefined if term was not found
+   */
+  pop(termSort: string): number {
+
+    return 0
+  }
+
+  // TODO
+  sort() {
+
+    console.log('sorting');
+    
+  }
+  
+  /**
    * With combining like terms. Should be
    * passed a copy of an object
    * @param addition new or old kind of monomial
    * @returns number of unique kind of terms
    */
-  private _add(addition: Term): number {
+   private _add(addition: Term): number {
 
     const like = this.expr.find(el => el.isLike(addition))
 
@@ -42,18 +75,4 @@ export class Expression {
     return this.expr.length
   }
 
-  /**
-   * Create new object
-   */
-  add(other: Expression): Expression {
-
-    const res = new Expression(this.expr)
-
-    for (let i = 0; i < other.expr.length; i++) {
-
-        res._add(other.expr[i].copy())
-    }
-
-    return res
-  }
 }
