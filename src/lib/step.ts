@@ -136,13 +136,13 @@ function addToExpr(
 
   const terms: Term[] = []
 
-  for (let i = num; i > 0; i --) {
+  for (let i = num - 1; i >= 0; i --) {
 
     // TODO
     expendToTime(
                   num,
                   expr.xCoeff[i],
-                  system[i],
+                  {x: system[i].x, u: system[i].u},
                   terms
                 )
   }
