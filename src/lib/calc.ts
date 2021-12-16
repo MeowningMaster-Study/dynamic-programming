@@ -1,10 +1,14 @@
+import { bellmanStep } from "./step";
+import { BellmanExpression } from "./step";
+import { InFunctional } from "./step";
+
 export type Functional = {
   xInner: number[]; // _x1 & _x2
   uInner: number; // _u
   xOuter: number[]; // _x1(n + 1) & _x2(n + 1)
 };
 
-export type System = { x: number[]; u: number }[]; // [[_x1, _x2, _u], [_x1, _x2, _u]]
+export type System = { x: number[], u: number }[]; // [[_x1, _x2, _u], [_x1, _x2, _u]]
 export type Innitial = number[][]; // [[...], [...]]
 export type Constraints = number[][]; // [[...], ... , [...]]  n + 1 inner arrays
 
@@ -20,31 +24,55 @@ export const calc = (
   xInnitial: Innitial, // початкові умови на х(i)
   uConstraints: Constraints // обмеження на u(i)
 ): Result => {
-  const xResultArray = [];
+  const xResArray = [];
   {
     const row1 = [];
     for (let i = 0; i < n + 1; ++i) {
       row1.push(0);
     }
-    xResultArray.push(row1);
+    xResArray.push(row1);
 
     const row2 = [];
     for (let i = 0; i < n + 1; ++i) {
       row2.push(0);
     }
-    xResultArray.push(row2);
+    xResArray.push(row2);
   }
-  const uResArray = [];
-  {
-    for (let i = 0; i < n; ++i) {
-      uResArray.push(0);
-    }
+  const uResArray: number[] = [];
+
+  // ******************** 👇 change here
+
+  const funct: InFunctional = {
+        xCoeff: functional.xInner,
+        u: 0
   }
 
-  // REALIZATION
+  const expr: BellmanExpression = {
+        xCoeff: functional.xOuter,
+        freeMem: 0,
+        chosenU: undefined
+  }
+
+  for (let i = n; i >= 0; i --) {
+
+    const bellmanExpr = bellmanStep(
+                                    system,
+                                    funct,
+                                    expr,
+                                    uConstraints[i]
+    )
+
+    uResArray.unshift(bellmanExpr.chosenU)
+  }
+
+  console.log(uResArray);
+  
+  
+
+  // ********************** 👆 change there
 
   return {
-    x: xResultArray,
+    x: xResArray,
     u: uResArray
   };
 };
