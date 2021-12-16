@@ -5,19 +5,22 @@
 
   export let steps_count: number;
   export let params_count: number;
-  const genValuesForParams = () => new Array(params_count).fill(0);
-  export let value: Functional = {
-    xInner: genValuesForParams(),
+  export let functional: Functional;
+  $: functional = {
+    xInner: new Array(params_count).fill(0),
     uInner: 0,
-    xOuter: genValuesForParams()
+    xOuter: new Array(params_count).fill(0)
   };
 </script>
 
-<Katex math={`Q = \\sum_{i=0}^{${steps_count}}`} />({#each value.xInner as x, i}
+<Katex
+  math={`Q = \\sum_{i=0}^{${steps_count}}`}
+/>({#each functional.xInner as x, i}
   <NumberInput bind:value={x} min={0} /><Katex math={`x_{${i + 1}}(i)`} />
   +
-{/each}<NumberInput bind:value={value.uInner} min={0} /><Katex math={'u(i)'} />)
-+ {#each value.xOuter as x, i}
+{/each}<NumberInput bind:value={functional.uInner} min={0} /><Katex
+  math={'u(i)'}
+/>) + {#each functional.xOuter as x, i}
   <NumberInput bind:value={x} min={0} /><Katex
     math={`x_{${i + 1}}(${steps_count + 1})`}
   />{i + 1 != params_count ? ' + ' : ''}

@@ -3,6 +3,8 @@
   export let min: number | undefined = undefined;
   export let max: number | undefined = undefined;
   export let int = true;
+  export let disabled = false;
+  export let onInput = () => {};
   let n = value;
 
   const on_change = () => {
@@ -26,7 +28,13 @@
   };
 </script>
 
-<input type="number" on:change={on_change} bind:value={n} />
+<input
+  type="number"
+  on:change={on_change}
+  bind:value={n}
+  on:input={onInput}
+  {disabled}
+/>
 
 <style>
   input {
