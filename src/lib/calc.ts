@@ -1,6 +1,6 @@
-import { bellmanStep } from "./step";
-import { BellmanExpression } from "./step";
-import { InFunctional } from "./step";
+import { bellmanStep } from './step';
+import { BellmanExpression } from './step';
+import { InFunctional } from './step';
 
 export type Functional = {
   xInner: number[]; // _x1 & _x2
@@ -8,7 +8,7 @@ export type Functional = {
   xOuter: number[]; // _x1(n + 1) & _x2(n + 1)
 };
 
-export type System = { x: number[], u: number }[]; // [[_x1, _x2, _u], [_x1, _x2, _u]]
+export type System = { x: number[]; u: number }[]; // [[_x1, _x2, _u], [_x1, _x2, _u]]
 export type Innitial = number[][]; // [[...], [...]]
 export type Constraints = number[][]; // [[...], ... , [...]]  n + 1 inner arrays
 
@@ -24,45 +24,38 @@ export const calc = (
   xInnitial: Innitial, // початкові умови на х(i)
   uConstraints: Constraints // обмеження на u(i)
 ): Result => {
-
-  const countX = xInnitial.length
+  const countX = xInnitial.length;
 
   const xResArray: number[][] = [];
 
-  for (let i = 0; i < countX; i ++) {
+  for (let i = 0; i < countX; i++) {
     const row = [];
     for (let j = 0; j < n + 1; ++j) {
       row.push(0);
     }
   }
-  
+
   const uResArray: number[] = [];
 
   // ******************** 👇 change here
 
   const funct: InFunctional = {
-        xCoeff: functional.xInner,
-        u: 0
-  }
+    xCoeff: functional.xInner,
+    u: 0
+  };
 
   const expr: BellmanExpression = {
-        xCoeff: functional.xOuter,
-        freeMem: 0,
-        chosenU: undefined
-  }
+    xCoeff: functional.xOuter,
+    freeMem: 0,
+    chosenU: undefined
+  };
 
-  let bellmanExpr: BellmanExpression = undefined
+  let bellmanExpr: BellmanExpression = undefined;
 
-  for (let i = n; i >= 0; i --) {
+  for (let i = n; i >= 0; i--) {
+    bellmanExpr = bellmanStep(system, funct, expr, uConstraints[i]);
 
-    bellmanExpr = bellmanStep(
-                                    system,
-                                    funct,
-                                    expr,
-                                    uConstraints[i]
-    )
-
-    uResArray.unshift(bellmanExpr.chosenU)
+    uResArray.unshift(bellmanExpr.chosenU);
   }
 
   // test logging
@@ -79,12 +72,9 @@ export const calc = (
   }
   */
 
-  for (let i = 0; i < xInnitial.length; i ++) {
-
-    xResArray[i][0] = bellmanExpr.xCoeff[i]
+  for (let i = 0; i < xInnitial.length; i++) {
+    xResArray[i][0] = bellmanExpr.xCoeff[i];
   }
-  
-  
 
   // ********************** 👆 change there
 
