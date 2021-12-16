@@ -24,6 +24,7 @@ export type InFunctional = {
 export type BellmanExpression = {
   xCoeff: number[]    // _x1 & _x2
   freeMem: number     // value obtained from u (just a number), innitially 0
+  chosenU: number     // value of chosen u(i) after computing bellmanStep (only for result)
 }
 
 ////////// main function ////////////
@@ -37,7 +38,7 @@ export type BellmanExpression = {
  * @param uConstraints 
  * @returns 
  */
-export function evalNextStep(
+export function bellmanStep(
                               system: System,
                               funct: InFunctional,
                               expr: BellmanExpression,
@@ -56,8 +57,6 @@ export function evalNextStep(
     */
     const sum = f.add(a)
 
-    let fMem = 0
-
     /*
     * get coeff before u
     * if positive - find min of constraint
@@ -65,12 +64,14 @@ export function evalNextStep(
     * assign it to res.freeMem
     */
 
+    let chosen = 0
+
     // init BellmanExpression.freeMem
-    const uCoeff = sum.pop('u')
+    const uCoeff = sum.find('u')
     if (uCoeff < 0) {
-      fMem = expr.freeMem + max(uConstraints)
+      chosen = max(uConstraints)
     } else {
-      fMem = expr.freeMem + min(uConstraints)
+      chosen = min(uConstraints)
     }
 
     // init BellmanExpression.xCoeff
@@ -78,14 +79,15 @@ export function evalNextStep(
 
     for (let k = 1; k <= funct.xCoeff.length; k ++) {
 
-      const cf = xCoff.push(sum.pop('x' + k))
+      const cf = xCoff.push(sum.find('x' + k))
       xCoff.push(cf === undefined ? 0 : cf)
     }
 
 
     return {
       xCoeff: xCoff,     
-      freeMem: fMem
+      freeMem: expr.freeMem + chosen,
+      chosenU: chosen
     }
 }
 
@@ -132,7 +134,7 @@ function addToExpr(
           Unappropriate number of phase coordinates: ${num}
       `)
 
-  const terms = [new Term(expr.u, name.u)]
+  const terms: Term[] = []
 
   for (let i = num; i > 0; i --) {
 
