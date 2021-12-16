@@ -20,45 +20,5 @@ const constraints: Constraints = [
   [-19, 0, 19]
 ];
 
-<<<<<<< Updated upstream
 const res = calc(n, functional, system, initial, constraints);
 console.log(res);
-=======
-export const calc = (
-  n: number, // к-сть кроків
-  functional: Functional, // початковий ф-ціонал
-  system: System, // 2х(2 + u) система
-  xInnitial: Innitial, // початкові умови на х(i)
-  uConstraints: Constraints // обмеження на u(i)
-): Result => {
-  const xResArray = [];
-  {
-    const row1 = [];
-    for (let i = 0; i < n + 1; ++i) {
-      row1.push(0);
-    }
-    xResArray.push(row1);
-
-    const row2 = [];
-    for (let i = 0; i < n + 1; ++i) {
-      row2.push(0);
-    }
-    xResArray.push(row2);
-  }
-  const uResArray = [];
-  {
-    for (let i = 0; i < n; ++i) {
-      uResArray.push(0);
-    }
-  }
-
-  console.log(xResArray, uResArray)
-
-  // REALIZATION
-
-  return {
-    x: xResArray,
-    u: uResArray
-  };
-};
->>>>>>> Stashed changes
