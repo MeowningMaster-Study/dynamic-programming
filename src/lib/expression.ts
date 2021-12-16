@@ -1,4 +1,4 @@
-import { Term } from "./term";
+import { Term } from './term';
 
 /**
  * Represents mathematical expression.
@@ -8,16 +8,14 @@ import { Term } from "./term";
  * to encode degree sumway into sort property
  */
 export class Expression {
-
-  private expr: Term[]
+  private expr: Term[];
 
   // deep copying of argument with combining like terms
   constructor(e: Term[]) {
+    this.expr = [];
 
-    this.expr = []
-
-    for (let i = 0; i < e.length; i ++) {
-        this._add(e[i].copy())
+    for (let i = 0; i < e.length; i++) {
+      this._add(e[i].copy());
     }
   }
 
@@ -25,15 +23,13 @@ export class Expression {
    * Create new object
    */
   add(other: Expression): Expression {
-
-    const res = new Expression(this.expr)
+    const res = new Expression(this.expr);
 
     for (let i = 0; i < other.expr.length; i++) {
-
-        res._add(other.expr[i].copy())
+      res._add(other.expr[i].copy());
     }
 
-    return res
+    return res;
   }
 
   /**
@@ -41,39 +37,35 @@ export class Expression {
    * @param termSort name of term sort kind to looking for
    * @returns undefined if term was not found
    */
-  find(termSort: string): number {
-    
+  find(termSort: string): number | undefined {
     const res = this.expr.find((element, _index, _array) => {
-
       if (element.getSort() === termSort) {
-        return true
+        return true;
       }
 
-      return false
-    })
+      return false;
+    });
 
-    return res == undefined ? undefined : res.getCoeff()
+    return res == undefined ? undefined : res.getCoeff();
   }
-  
+
   /**
    * With combining like terms. Should be
    * passed a copy of an object
    * @param addition new or old kind of monomial
    * @returns number of unique kind of terms
    */
-   private _add(addition: Term): number {
-
-    const like = this.expr.find(el => el.isLike(addition))
+  private _add(addition: Term): number {
+    const like = this.expr.find((el) => el.isLike(addition));
 
     if (like === undefined) {
-      this.expr.push(addition)
-      return
+      this.expr.push(addition);
+      return 0;
     }
 
-    const idx = this.expr.indexOf(like)
-    this.expr[idx].addCoeff(addition.getCoeff())
+    const idx = this.expr.indexOf(like);
+    this.expr[idx].addCoeff(addition.getCoeff());
 
-    return this.expr.length
+    return this.expr.length;
   }
-
 }

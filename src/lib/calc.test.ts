@@ -19,13 +19,13 @@ test('mdk', () => {
     { x: [1, 0], u: 1 }
   ];
   const initial: Innitial = [
+    [-9, 0, 9],
+    [-19, 0, 19]
+  ];
+  const constraints: Constraints = [
     [-3, 0, 3],
     [-1, 0, 1],
     [-4, 0, 4]
-  ];
-  const constraints: Constraints = [
-    [-9, 0, 9],
-    [-19, 0, 19]
   ];
 
   const res = calc(n, functional, system, initial, constraints);

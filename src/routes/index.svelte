@@ -23,6 +23,7 @@
   $: {
     try {
       result = calc(steps_count, functional, system, initial, constraints);
+      console.log(result);
     } catch (e) {
       console.error(e);
     }
@@ -61,8 +62,8 @@
   <ControlConstraints {steps_count} bind:constraints />
 </p>
 <h2>Результат:</h2>
-<ResultOutput bind:result {steps_count} {params_count} />
 
+<!-- <ResultOutput bind:result {steps_count} {params_count} /> -->
 <style>
   :global(body) {
     font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console,
