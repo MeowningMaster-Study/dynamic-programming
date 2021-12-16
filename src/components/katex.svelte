@@ -18,6 +18,4 @@
     integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs"
     crossorigin="anonymous"
   />
-</svelte:head>
-
-{@html katexString}
+</svelte:head>{@html katexString}
