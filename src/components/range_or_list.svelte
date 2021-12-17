@@ -50,6 +50,7 @@
 <Katex math={rangePre} />
 <NumberInput
   bind:value={range}
+  min={0}
   int
   on_click={() => (type = Opt.Range.valueOf())}
 />
