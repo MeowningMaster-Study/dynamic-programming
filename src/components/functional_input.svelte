@@ -18,9 +18,9 @@
 {#each functional.xInner as x, i}<NumberInput bind:value={x} int /><Katex
     math={`x_{${i + 1}}(i)`}
   />{' + '}{/each}
-<NumberInput bind:value={functional.uInner} min={0} /><Katex math={'u(i)'} />)
+<NumberInput bind:value={functional.uInner} /><Katex math={'u(i)'} />)
 {#each functional.xOuter as x, i}
-  {' + '}<NumberInput bind:value={x} min={0} /><Katex
+  {' + '}<NumberInput bind:value={x} /><Katex
     math={`x_{${i + 1}}(${steps_count + 1})`}
   />
 {/each}
