@@ -15,7 +15,7 @@
 
 <Katex math={`Q = \\sum_{i=0}^{${steps_count}}`} />
 (
-{#each functional.xInner as x, i}<NumberInput bind:value={x} min={0} /><Katex
+{#each functional.xInner as x, i}<NumberInput bind:value={x} int /><Katex
     math={`x_{${i + 1}}(i)`}
   />{' + '}{/each}
 <NumberInput bind:value={functional.uInner} min={0} /><Katex math={'u(i)'} />)

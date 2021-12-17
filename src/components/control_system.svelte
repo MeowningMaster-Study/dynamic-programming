@@ -14,11 +14,11 @@
 {#each system as row, i}
   <Katex math={`x_{${i + 1}}(i+1)=`} />
   {#each row.x as arg, i}
-    <NumberInput min={0} bind:value={arg} />
+    <NumberInput int bind:value={arg} />
     <Katex math={`x_{${i + 1}}(i)`} />
     {' + '}
   {/each}
-  <NumberInput min={0} bind:value={row.u} />
+  <NumberInput int bind:value={row.u} />
   <Katex math={'u(i)'} />
   {#if i != params_count}
     <br />
