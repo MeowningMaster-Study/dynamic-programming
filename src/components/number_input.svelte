@@ -4,12 +4,14 @@
   export let max: number | undefined = undefined;
   export let int = true;
   export let disabled = false;
-  export let onInput = () => {};
+  export let on_click = () => {};
   let n = value;
+  let input: HTMLInputElement;
+  let span: HTMLSpanElement;
 
   const on_change = () => {
     if (typeof n !== 'number') {
-      n = 1;
+      n = 0;
     }
     if (min !== undefined) {
       if (n < min) {
@@ -25,16 +27,20 @@
       n = Math.trunc(n);
     }
     value = n;
+    span.textContent = n.toString();
+    input.style.width = span.offsetWidth + 'px';
   };
 </script>
 
 <input
   type="number"
-  on:change={on_change}
   bind:value={n}
-  on:input={onInput}
+  on:input={on_change}
+  bind:this={input}
   {disabled}
+  on:click={on_click}
 />
+<span bind:this={span} />
 
 <style>
   input {
@@ -51,6 +57,13 @@
   input:focus-visible {
     outline: none;
     background: #faedc6;
+  }
+
+  span {
+    position: absolute;
+    left: -9999px;
+    display: inline-block;
+    min-width: 20px;
   }
 
   /* remove spit buttons */

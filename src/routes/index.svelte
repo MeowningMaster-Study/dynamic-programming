@@ -20,10 +20,18 @@
   let initial: Innitial;
   let constraints: Constraints;
   let result: Result;
+
   $: {
     try {
+      console.warn(
+        steps_count,
+        params_count,
+        functional,
+        system,
+        initial,
+        constraints
+      );
       result = calc(steps_count, functional, system, initial, constraints);
-      console.log(result);
     } catch (e) {
       console.error(e);
     }

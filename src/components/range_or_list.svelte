@@ -1,41 +1,58 @@
 <script lang="ts">
   import NumberInput from './number_input.svelte';
   import Katex from './katex.svelte';
+  import cuid from 'cuid';
 
-  enum Type {
+  enum Opt {
     List,
     Range
   }
 
-  export let i: number;
-  export let type = 0;
-  export let list = '0';
-  export let range = 0;
-  export let value = [0];
+  const parseList = (list: string) =>
+    list
+      .split(',')
+      .map((x) => Number(x))
+      .filter((x) => !isNaN(x));
+
+  const asRange = (arr: number[]) => {
+    if (arr.length === 0 && arr[0] === 0) return 0;
+    arr.sort();
+    if (arr[1] === 0 && arr[0] === -arr[2]) return arr[2];
+    return undefined;
+  };
+
+  export let value: number[];
+  let type: Opt; // Opt.valueOf
+  let list = '0';
+  let range = 0;
+  const mbRange = asRange(value);
+  if (mbRange !== undefined) {
+    type = Opt.Range.valueOf();
+    range = mbRange;
+  } else {
+    type = Opt.List.valueOf();
+    list = value.join(', ');
+  }
+  $: {
+    if (type === Opt.Range.valueOf())
+      value = range === 0 ? [0] : [-range, 0, range];
+    if (type === Opt.List.valueOf()) value = parseList(list);
+  }
   export let listPre = '';
   export let rangePre = '';
-  export let name;
-  $: {
-    if (type === Type.List) {
-      value = list
-        .split(',')
-        .map((x) => Number(x))
-        .filter((x) => !isNaN(x));
-    }
-
-    if (type === Type.Range) {
-      if (range === 0) value = [0];
-      else value = [-range, 0, range];
-    }
-  }
+  let name = cuid();
 </script>
 
-<input type="radio" bind:group={type} name={`${name}${i}`} value={Type.List} />
+<input type="radio" bind:group={type} {name} value={Opt.List.valueOf()} />
 <Katex math={listPre} />
-<input bind:value={list} />
-<input type="radio" bind:group={type} name={`${name}${i}`} value={Type.Range} />
+<input bind:value={list} on:click={() => (type = Opt.List.valueOf())} />
+<input type="radio" bind:group={type} {name} value={Opt.Range.valueOf()} />
 <Katex math={rangePre} />
-<NumberInput bind:value={range} min={0} />
+<NumberInput
+  bind:value={range}
+  min={0}
+  on_click={() => (type = Opt.Range.valueOf())}
+/>
 
 <style>
   input:not([type='radio']) {
