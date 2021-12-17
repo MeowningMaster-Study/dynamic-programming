@@ -13,15 +13,14 @@
   };
 </script>
 
-<Katex
-  math={`Q = \\sum_{i=0}^{${steps_count}}`}
-/>({#each functional.xInner as x, i}
-  <NumberInput bind:value={x} min={0} /><Katex math={`x_{${i + 1}}(i)`} />
-  +
-{/each}<NumberInput bind:value={functional.uInner} min={0} /><Katex
-  math={'u(i)'}
-/>) + {#each functional.xOuter as x, i}
-  <NumberInput bind:value={x} min={0} /><Katex
+<Katex math={`Q = \\sum_{i=0}^{${steps_count}}`} />
+(
+{#each functional.xInner as x, i}<NumberInput bind:value={x} min={0} /><Katex
+    math={`x_{${i + 1}}(i)`}
+  />{' + '}{/each}
+<NumberInput bind:value={functional.uInner} min={0} /><Katex math={'u(i)'} />)
+{#each functional.xOuter as x, i}
+  {' + '}<NumberInput bind:value={x} min={0} /><Katex
     math={`x_{${i + 1}}(${steps_count + 1})`}
-  />{i + 1 != params_count ? ' + ' : ''}
+  />
 {/each}
